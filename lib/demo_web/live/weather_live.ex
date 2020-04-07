@@ -4,7 +4,7 @@ defmodule DemoWeb.WeatherLive.GrandChild do
   def render(assigns) do
     ~L"""
     <hr>
-    <p>Grandchild Liveview</p>
+    <p>I'm the <strong>grandchild Liveview</strong></p>
     """
   end
 end
@@ -18,9 +18,8 @@ defmodule DemoWeb.WeatherLive.Child do
 
   def render(assigns) do
     ~L"""
-    <p>Child Liveview</p>
+    <p>I'm the <strong>child Liveview</strong></p>
     <a href="#" phx-click="toggle_liveview">Toggle Grandchild Liveview</a>
-    <p>display: <%= @display %></p>
     <%= if @display do %>
     <%= live_render(@socket, DemoWeb.WeatherLive.GrandChild, id: :grandchild) %>
     <% end %>
@@ -45,11 +44,7 @@ defmodule DemoWeb.WeatherLive do
       </form>
     </div>
     <hr>
-    <a href="#" phx-click="toggle_liveview">Toggle Child Liveview</a>
-    <p>display: <%= @display %></p>
-    <%= if @display do %>
     <%= live_render(@socket, DemoWeb.WeatherLive.Child, id: :child) %>
-    <% end %>
     """
   end
 
@@ -61,11 +56,6 @@ defmodule DemoWeb.WeatherLive do
   def handle_event("set-location", %{"location" => location}, socket) do
     {:noreply, put_location(socket, location)}
   end
-
-  def handle_event("toggle_liveview", _, socket) do
-    {:noreply, update(socket, :display, fn state -> !state end)}
-  end
-
   def handle_info({:put, location}, socket) do
     {:noreply, put_location(socket, location)}
   end
